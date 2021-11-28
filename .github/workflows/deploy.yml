@@ -15,4 +15,6 @@ jobs:
           cache: 'maven'
       - name: Build with Maven
         run: mvn package -DskipTests
+      - name: Lists Jar
+        run: ls -R
 
