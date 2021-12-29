@@ -1,8 +1,6 @@
 name: deploy springboot demos
 on:
-  push:
-    tags:
-      - v*
+  push: {}
   workflow_dispatch: {}
 
 jobs:
