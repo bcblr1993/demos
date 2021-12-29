@@ -2,7 +2,7 @@
 FROM openjdk:11-jre
 
 # 从 builder 阶段中复制文件到镜像中
-COPY ./target/demo.jar /app/demos.jar
+COPY ./target/demos.jar /app/demos.jar
 
 # 设置工作目录
 WORKDIR /app
