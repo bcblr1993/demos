@@ -67,7 +67,7 @@ jobs:
           port: 22
           envs: DOCKER_IMAGE
           script: |
-            cd ~/services/demo/
+            cd ~/services/demos/
             docker pull "$DOCKER_IMAGE"
             DOCKER_IMAGE="$DOCKER_IMAGE" docker-compose down
             DOCKER_IMAGE="$DOCKER_IMAGE" docker-compose up -d
