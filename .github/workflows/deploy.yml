@@ -41,3 +41,33 @@ jobs:
           tag_semver: true
     outputs:
       tag: ${{ steps.publish-docker.outputs.tag }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - build-image
+    steps:
+      - uses: actions/checkout@v2
+      - name: copy docker-compose.yml file to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: 22
+          source: "docker-compose.yml"
+          target: "services/demos/"
+      - uses: appleboy/ssh-action@master
+        env:
+          DOCKER_IMAGE: bcblr/demos:${{ needs.build-image.outputs.tag }}
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: 22
+          envs: DOCKER_IMAGE
+          script: |
+            cd ~/services/demo/
+            docker pull "$DOCKER_IMAGE"
+            DOCKER_IMAGE="$DOCKER_IMAGE" docker-compose down
+            DOCKER_IMAGE="$DOCKER_IMAGE" docker-compose up -d
