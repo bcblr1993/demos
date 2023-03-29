@@ -33,7 +33,7 @@ jobs:
           name: demos.jar
           path: target/
       - id: publish-docker
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: bcblr/demos
           username: ${{ secrets.DOCKER_USERNAME }}
